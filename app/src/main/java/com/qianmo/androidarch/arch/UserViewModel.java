@@ -3,7 +3,7 @@ package com.qianmo.androidarch.arch;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.qianmo.androidarch.Resource;
+import com.qianmo.androidarch.basic.Resource;
 import com.qianmo.androidarch.model.User;
 
 import java.util.concurrent.TimeUnit;
@@ -27,6 +27,12 @@ public class UserViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DefaultSubscriber<Long>() {
                     @Override
+                    protected void onStart() {
+                        super.onStart();
+                        userData.postValue(new Resource<User>(Resource.Status.IDEL));
+                    }
+
+                    @Override
                     public void onNext(Long aLong) {
                         User user = new User();
                         user.setUserId("id:" + System.currentTimeMillis());
@@ -36,7 +42,7 @@ public class UserViewModel extends ViewModel {
 
                     @Override
                     public void onError(Throwable t) {
-                        userData.postValue(Resource.error("",new User()));
+                        userData.postValue(new Resource<User>(Resource.Status.ERROR, t.getMessage()));
                     }
 
                     @Override

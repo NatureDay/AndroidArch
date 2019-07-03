@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.qianmo.androidarch.arch.UserViewModel;
+import com.qianmo.androidarch.basic.Resource;
 import com.qianmo.androidarch.model.User;
 
 public class MainActivity extends AppCompatActivity {

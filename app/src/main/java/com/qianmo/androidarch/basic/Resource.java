@@ -1,4 +1,4 @@
-package com.qianmo.androidarch;
+package com.qianmo.androidarch.basic;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,24 +63,8 @@ public class Resource<T> {
         this.message = message;
     }
 
-    public static <T> Resource<T> idel(@Nullable T data) {
-        return new Resource<>(Status.IDEL, data, null);
-    }
-
-    public static <T> Resource<T> loading(@Nullable T data) {
-        return loading(data, null);
-    }
-
-    public static <T> Resource<T> loading(@Nullable T data, String message) {
-        return new Resource<>(Status.LOADING, data, message);
-    }
-
     public static <T> Resource<T> success(@Nullable T data) {
         return new Resource<>(Status.SUCCESS, data, null);
-    }
-
-    public static <T> Resource<T> error(@Nullable T data, String message) {
-        return new Resource<>(Status.ERROR, data, message);
     }
 
     @Override
