@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 /**
  * A generic class that holds a value with its loading status.
+ * 通用包括状态的数据封装类，可用于配合LiveData<T>实现mvvm
  *
  * @param <T>
  */
@@ -17,9 +18,21 @@ public class Resource<T> {
      * {@code LiveData<Resource<T>>} to pass back the latest data to the UI with its fetch status.
      */
     public enum Status {
+        /**
+         * 空闲状态，初始状态
+         */
         IDEL,
+        /**
+         * 加载状态
+         */
         LOADING,
+        /**
+         * 成功获取结果状态
+         */
         SUCCESS,
+        /**
+         * 错误状态，异常状态
+         */
         ERROR
     }
 
@@ -32,26 +45,26 @@ public class Resource<T> {
     @Nullable
     public final T data;
 
+    public Resource(@NonNull Status status) {
+        this(status, null, null);
+    }
+
+    public Resource(@NonNull Status status, @Nullable String message) {
+        this(status, null, message);
+    }
+
+    public Resource(@NonNull Status status, @Nullable T data) {
+        this(status, data, null);
+    }
+
     public Resource(@NonNull Status status, @Nullable T data, @Nullable String message) {
         this.status = status;
         this.data = data;
         this.message = message;
     }
 
-    public static <T> Resource<T> idel(@Nullable T data) {
-        return new Resource<>(Status.IDEL, data, null);
-    }
-
-    public static <T> Resource<T> loading(@Nullable T data) {
-        return new Resource<>(Status.LOADING, data, null);
-    }
-
     public static <T> Resource<T> success(@Nullable T data) {
         return new Resource<>(Status.SUCCESS, data, null);
-    }
-
-    public static <T> Resource<T> error(String msg, @Nullable T data) {
-        return new Resource<>(Status.ERROR, data, msg);
     }
 
     @Override
