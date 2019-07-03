@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mUserViewModel = new ViewModelProvider.NewInstanceFactory().create(UserViewModel.class);
-        mUserViewModel.getUserData().observe(this, new Observer<User>() {
+        mUserViewModel.getUserData().observe(this, new Observer<Resource<User>>() {
             @Override
-            public void onChanged(User user) {
-                updateView(user);
+            public void onChanged(Resource<User> userResource) {
+                updateView(userResource.data);
             }
         });
     }

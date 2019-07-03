@@ -3,6 +3,7 @@ package com.qianmo.androidarch.arch;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.qianmo.androidarch.Resource;
 import com.qianmo.androidarch.model.User;
 
 import java.util.concurrent.TimeUnit;
@@ -14,9 +15,9 @@ import io.reactivex.subscribers.DefaultSubscriber;
 
 public class UserViewModel extends ViewModel {
 
-    private MutableLiveData<User> userData = new MutableLiveData<>();
+    private MutableLiveData<Resource<User>> userData = new MutableLiveData<>();
 
-    public MutableLiveData<User> getUserData() {
+    public MutableLiveData<Resource<User>> getUserData() {
         return userData;
     }
 
@@ -30,12 +31,12 @@ public class UserViewModel extends ViewModel {
                         User user = new User();
                         user.setUserId("id:" + System.currentTimeMillis());
                         user.setUserName("张三:" + (int) (100 * Math.random()));
-                        userData.postValue(user);
+                        userData.postValue(Resource.success(user));
                     }
 
                     @Override
                     public void onError(Throwable t) {
-
+                        userData.postValue(Resource.error("",new User()));
                     }
 
                     @Override
